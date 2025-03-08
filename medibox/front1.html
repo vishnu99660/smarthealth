@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Assistant</title>
+
+    <link rel="icon" type="image/png" href="eww.png">
+    <link rel="stylesheet" href="css1.css">
+    <script src="script.js" defer></script>
+    <style>
+        /* Chatbox Styling */
+        .chatbox {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+        .chatbox-header {
+            background: #007BFF;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .chatbox-body {
+            height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            font-size: 14px;
+        }
+        .chatbox-footer {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+        .chatbox-footer input {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .chatbox-footer button {
+            background: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin-left: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .chatbox-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body style="background-color: powderblue;">
+    <header>
+        <h1>Healthcare Assistant</h1>
+        <nav>
+            <ul>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <h2>Your Health, Our Priority</h2>
+            <p>Providing compassionate and professional healthcare assistance.</p>
+            <a href="#services" class="cta-button">Learn More</a>
+        </section>
+        
+
+        <section>
+            <h2>Our Services</h2>
+            <div class="service">
+                <h3>Personal Care</h3>
+                <p>Assistance with daily living activities.</p>
+            </div>
+            <div class="service">
+                <h3>Medication Management</h3>
+                <p>Ensuring proper medication administration.</p>
+            </div>
+            <div class="service">
+                <h3>Companionship</h3>
+                <p>Providing companionship and emotional support.</p>
+            </div>
+        </section>
+        
+    
+        <div class="container">
+            <h1>Application Form</h1>
+            <form action="#" method="post">
+                <fieldset>
+                    <legend>Personal Information</legend>
+                    <label for="first-name">First Name:</label>
+                    <input type="text" id="first-name" name="first-name" required>
+    
+                    <label for="last-name">Last Name:</label>
+                    <input type="text" id="last-name" name="last-name" required>
+    
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" required>
+    
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select...</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </fieldset>
+    
+                <fieldset>
+                    <legend>Contact Information</legend>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+    
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" required>
+    
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" rows="4" required></textarea>
+                </fieldset>
+    
+                <fieldset>
+                    <legend>Health Information</legend>
+                    <h1>Medicine Recommendation System</h1>
+                    <label for="disease">Select a disease:</label>
+                    <select id="disease">
+                 <option value="Cold">Cold</option>
+                 <option value="Flu">Flu</option>
+                 <option value="Headache">Headache</option>
+                  <option value="Diabetes">Diabetes</option>
+                    </select>
+                  <button onclick="getMedicine()" formtarget="_top">Get Medicine</button>
+                <p id="medicines"></p>
+
+                </fieldset>
+            </form>
+    </main>
+   
+  document.body.appendChild(button);
+</script>
+
+
+    <footer>
+        <p>&copy; 20254 Healthcare Assistant. All rights reserved.</p>
+        <div>
+            <h3>Contact Us</h3>
+            <p>Email: info@healthcareassistant.com</p>
+            <p>Phone: (123) 456-7890</p>
+        </div>
+    </footer>
+       <!-- Chatbox -->
+       <button class="chatbox-toggle" onclick="toggleChatbox()">💬</button>
+       <div class="chatbox" id="chatbox">
+           <div class="chatbox-header">Chat with Us</div>
+           <div class="chatbox-body" id="chatbox-body"></div>
+           <div class="chatbox-footer">
+               <input type="text" id="userInput" placeholder="Type a message...">
+               <button onclick="sendMessage()">Send</button>
+           </div>
+       </div>
+       
+       <script>
+           function toggleChatbox() {
+               var chatbox = document.getElementById("chatbox");
+               chatbox.style.display = chatbox.style.display === "none" || chatbox.style.display === "" ? "block" : "none";
+           }
+           
+           function sendMessage() {
+               var userInput = document.getElementById("userInput").value;
+               var chatBody = document.getElementById("chatbox-body");
+               
+               if (userInput.trim() === "") return;
+               
+               var userMessage = document.createElement("p");
+               userMessage.innerHTML = `<strong>You:</strong> ${userInput}`;
+               chatBody.appendChild(userMessage);
+               
+               document.getElementById("userInput").value = "";
+               
+               setTimeout(() => {
+                   var botResponse = getBotResponse(userInput);
+                   var botMessage = document.createElement("p");
+                   botMessage.innerHTML = `<strong>Bot:</strong> ${botResponse}`;
+                   chatBody.appendChild(botMessage);
+                   chatBody.scrollTop = chatBody.scrollHeight;
+               }, 1000);
+           }
+           
+           function getBotResponse(input) {
+               let responses = {
+                   "hello": "Hello! How can I assist you today?",
+                   "hi": "Hi there! How can I help?",
+                   "services": "We provide personal care, medication management, and companionship services.",
+                   "contact": "You can contact us at info@healthcareassistant.com or (123) 456-7890.",
+                   "medicine": "We offer medication management services to ensure proper administration.",
+                   "appointment": "You can schedule an appointment by contacting us via email or phone.",
+                   "emergency": "In case of an emergency, please call 911 or visit the nearest hospital.",
+                   "bye": "Goodbye! Have a great day!"
+               };
+               return responses[input.toLowerCase()] || "I'm sorry, I don't understand that. Can you rephrase?";
+           }
+       </script> 
+    
+     
+
+</body>
+</html>
